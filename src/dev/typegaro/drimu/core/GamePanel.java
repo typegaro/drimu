@@ -1,4 +1,4 @@
-package dev.typegaro.drimu.core;
+package core;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,12 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.KeyboardFocusManager;
 import java.lang.Runnable;
 import java.lang.Thread;
+import entity.Player;
 
 
 public class GamePanel extends JPanel implements Runnable {
     int originalTileSize = 16;
     int tileScale = 3;
-    int tileSize = originalTileSize * tileScale; 
+    public int tileSize = originalTileSize * tileScale; 
     int screenCols = 16;
     int screenRows = 12;
     int screenWidth = tileSize * screenCols;
@@ -19,9 +20,8 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     InputHandler input = new InputHandler();
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    Player player = new Player(this, input);
+
 
     Thread gameThread;
 
@@ -48,33 +48,17 @@ public class GamePanel extends JPanel implements Runnable {
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
             if (delta >= 1) {
-                update();
+                player.update();
                 repaint();
                 delta--;
             }
         }
     }
 
-    public void update() {
-        if (input.up) {
-            playerY -= playerSpeed;
-        } 
-        else if (input.down) {
-            playerY += playerSpeed;
-        }
-        else if (input.left) {
-            playerX -= playerSpeed;
-        }
-        else if (input.right) {
-            playerX += playerSpeed;
-        }
-    }
-
     public void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(java.awt.Color.white);
-        g2.fillRect(playerX, playerX, tileSize, tileSize);
+        player.drow(g2);
         g2.dispose();
     }
 }

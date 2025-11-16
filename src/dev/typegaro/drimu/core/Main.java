@@ -1,4 +1,4 @@
-package dev.typegaro.drimu.core;
+package core;
 
 import java.awt.Window;
 
