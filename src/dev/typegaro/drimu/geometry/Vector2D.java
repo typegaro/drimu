@@ -1,4 +1,4 @@
-package geometry;
+package dev.typegaro.drimu.geometry;
 
 public class Vector2D {
     public int x;

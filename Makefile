@@ -15,7 +15,7 @@ $(BUILD_DIR)/classes.stamp: $(SOURCES)
 
 .PHONY: build
 build: $(BUILD_DIR)/classes.stamp
-	@echo "Build completata in $(BUILD_DIR)"
+	@echo "Build completed in $(BUILD_DIR)"
 
 .PHONY: run
 run: build
@@ -24,9 +24,8 @@ run: build
 .PHONY: jar
 jar: build
 	jar --create --file app.jar --main-class $(MAIN_CLASS) -C $(BUILD_DIR) .
-	@echo "Creato app.jar (java -jar app.jar)"
 
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR) app.jar
-	@echo "Pulizia completata"
+	@echo "cleaned build artifacts"

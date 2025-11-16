@@ -1,7 +1,7 @@
-package entity;
+package dev.typegaro.drimu.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import geometry.Vector2D;
+import dev.typegaro.drimu.geometry.Vector2D;
 
 public abstract class Entity implements EntityInterface {
     protected int speed;
@@ -15,4 +15,3 @@ public abstract class Entity implements EntityInterface {
     public abstract void drow(Graphics2D g2);
 
 }
-

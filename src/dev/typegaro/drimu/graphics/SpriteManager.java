@@ -1,5 +1,6 @@
-package graphics;
+package dev.typegaro.drimu.graphics;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -10,20 +11,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import javax.imageio.ImageIO;
-import geometry.Vector2D;
+import dev.typegaro.drimu.geometry.Vector2D;
 
 public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<S> {
     private final Map<S, BufferedImage[]> sprites;
+    private final Path resourceBase;
     private S currentState;
     private int currentFrame;
 
     public SpriteManager() {
-        sprites = new HashMap<>();
+        this(Paths.get("res"));
+    }
+
+    public SpriteManager(Path resourceBase) {
+        this.resourceBase = resourceBase;
+        this.sprites = new HashMap<>();
     }
 
     @Override
     public void loadSprite(S state, String dirPath) {
-        try (Stream<Path> paths = Files.list(Paths.get(dirPath))) {
+        Path spriteDir = resourceBase.resolve(dirPath).normalize();
+        if (!Files.isDirectory(spriteDir)) {
+            throw new IllegalArgumentException("Sprite directory not found: " + spriteDir.toAbsolutePath());
+        }
+        try (Stream<Path> paths = Files.list(spriteDir)) {
             BufferedImage[] frames = paths
                     .filter(Files::isRegularFile)
                     .sorted()
@@ -70,7 +81,7 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     }
 
     @Override
-    public void drow(graphics2D g2, Vector2D position) {
+    public void drow(Graphics2D g2, Vector2D position) {
         BufferedImage[] frames = sprites.get(currentState);
         g2.drawImage(frames[currentFrame], position.x, position.y, null);
     }

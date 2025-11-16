@@ -1,11 +1,11 @@
-package entity;
+package dev.typegaro.drimu.entity;
 
 import java.awt.Graphics2D;
 
-import core.GamePanel;
-import core.InputHandler;
-import graphics.SpriteManager;
-import geometry.Vector2D;
+import dev.typegaro.drimu.core.GamePanel;
+import dev.typegaro.drimu.core.InputHandler;
+import dev.typegaro.drimu.graphics.SpriteManager;
+import dev.typegaro.drimu.geometry.Vector2D;
 
 enum PlayerState {
     IDLE_UP,
@@ -22,7 +22,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.input = input;
         setDefaultValues();
-        sm.loadSprite(PlayerState.IDLE_UP,"../../../../../res/player/IdleU");
+        sm.loadSprite(PlayerState.IDLE_UP, "player/IdleU");
         sm.setState(PlayerState.IDLE_UP);
     }
 
@@ -52,7 +52,7 @@ public class Player extends Entity {
     }
     @Override
     public void drow(Graphics2D g2) {
-        sm.drow();
+        sm.drow(g2, position);
     }
 
     @Override

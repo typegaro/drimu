@@ -1,4 +1,4 @@
-package core;
+package dev.typegaro.drimu.core;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.KeyboardFocusManager;
 import java.lang.Runnable;
 import java.lang.Thread;
-import entity.Player;
+import dev.typegaro.drimu.entity.Player;
 
 
 public class GamePanel extends JPanel implements Runnable {

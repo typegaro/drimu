@@ -1,4 +1,4 @@
-package entity;
+package dev.typegaro.drimu.entity;
 import java.awt.Graphics2D;
 
 public interface EntityInterface {
