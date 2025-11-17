@@ -9,6 +9,7 @@ import dev.typegaro.drimu.geometry.Vector2D;
 
 enum PlayerState {
     IDLE_UP,
+    IDLE_DOWN,
     RUN_UP,
     RUN_DOWN,
     RUN_RIGHT,
@@ -26,10 +27,11 @@ public class Player extends Entity {
         this.sm = new SpriteManager<PlayerState>(gp.tileSize);
         setDefaultValues();
         sm.loadSprite(PlayerState.IDLE_UP, "player/IdleU");
+        sm.loadSprite(PlayerState.IDLE_DOWN, "player/IdleD");
         sm.loadSprite(PlayerState.RUN_UP, "player/RunU");
         sm.loadSprite(PlayerState.RUN_DOWN, "player/RunD");
         sm.loadSprite(PlayerState.RUN_RIGHT, "player/RunR");
-        sm.setState(PlayerState.IDLE_UP);
+        sm.setState(PlayerState.IDLE_DOWN);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class Player extends Entity {
             sm.setState(PlayerState.RUN_RIGHT);
         }
         else {
-            sm.setState(PlayerState.IDLE_UP);
+            sm.setState(PlayerState.IDLE_DOWN);
         }
         sm.update();
         position.move(vec.scale(speed));

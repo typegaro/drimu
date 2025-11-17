@@ -11,7 +11,7 @@ import dev.typegaro.drimu.entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     int originalTileSize = 16;
-    int tileScale = 3;
+    int tileScale = 5;
     public int tileSize = originalTileSize * tileScale; 
     int screenCols = 16;
     int screenRows = 12;

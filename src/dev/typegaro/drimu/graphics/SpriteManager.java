@@ -19,6 +19,7 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     private S currentState;
     private int currentFrame;
     private int spriteSize;
+    
 
     public SpriteManager(int spriteSize) {
         this(Paths.get("res"), spriteSize);
@@ -56,8 +57,13 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
 
     @Override
     public void setState(S state) {
-        this.currentState = state;
-        this.currentFrame = 0;
+        if (state == null) {
+            throw new IllegalArgumentException("State cannot be null");
+        }
+        if (this.currentState != state) {
+            this.currentState = state;
+            this.currentFrame = 0;
+        }
     }
 
     @Override
@@ -70,7 +76,7 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     public void nextFrame() {
         BufferedImage[] frames = sprites.get(currentState);
         if (frames != null && frames.length > 0) {
-            currentFrame = (currentFrame + 1) % frames.length;
+            this.currentFrame = (this.currentFrame + 1) % frames.length;
         }
     }
 
@@ -85,11 +91,12 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     @Override
     public void drow(Graphics2D g2, Vector2D position) {
         BufferedImage[] frames = sprites.get(currentState);
-        g2.drawImage(frames[currentFrame], position.x, position.y,spriteSize,spriteSize, null);
+        g2.drawImage(frames[this.currentFrame], position.x, position.y,spriteSize,spriteSize, null);
     }
 
     @Override
     public void update() {
         nextFrame();
+        System.out.println("Current State: " + currentState + ", Current Frame: " + currentFrame);
     }
 }
