@@ -18,12 +18,14 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     private final Path resourceBase;
     private S currentState;
     private int currentFrame;
+    private int spriteSize;
 
-    public SpriteManager() {
-        this(Paths.get("res"));
+    public SpriteManager(int spriteSize) {
+        this(Paths.get("res"), spriteSize);
     }
 
-    public SpriteManager(Path resourceBase) {
+    public SpriteManager(Path resourceBase,int spriteSize) {
+        this.spriteSize = spriteSize;
         this.resourceBase = resourceBase;
         this.sprites = new HashMap<>();
     }
@@ -83,7 +85,7 @@ public class SpriteManager<S extends Enum<S>> implements SpriteManagerInterface<
     @Override
     public void drow(Graphics2D g2, Vector2D position) {
         BufferedImage[] frames = sprites.get(currentState);
-        g2.drawImage(frames[currentFrame], position.x, position.y, null);
+        g2.drawImage(frames[currentFrame], position.x, position.y,spriteSize,spriteSize, null);
     }
 
     @Override

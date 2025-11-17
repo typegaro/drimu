@@ -9,20 +9,26 @@ import dev.typegaro.drimu.geometry.Vector2D;
 
 enum PlayerState {
     IDLE_UP,
-    WALKING,
+    RUN_UP,
+    RUN_DOWN,
+    RUN_RIGHT,
 }
 
 public class Player extends Entity {
     private InputHandler input;
     private GamePanel gp;
-    private SpriteManager<PlayerState> sm = new SpriteManager<>();
+    private SpriteManager<PlayerState> sm;
 
 
     public Player(GamePanel gp, InputHandler input) {
         this.gp = gp;
         this.input = input;
+        this.sm = new SpriteManager<PlayerState>(gp.tileSize);
         setDefaultValues();
         sm.loadSprite(PlayerState.IDLE_UP, "player/IdleU");
+        sm.loadSprite(PlayerState.RUN_UP, "player/RunU");
+        sm.loadSprite(PlayerState.RUN_DOWN, "player/RunD");
+        sm.loadSprite(PlayerState.RUN_RIGHT, "player/RunR");
         sm.setState(PlayerState.IDLE_UP);
     }
 
@@ -37,15 +43,22 @@ public class Player extends Entity {
         Vector2D vec = new Vector2D();
         if (input.up) {
             vec.y -= 1;
+            sm.setState(PlayerState.RUN_UP);
         }
-        if (input.down) {
+        else if (input.down) {
             vec.y += 1;
+            sm.setState(PlayerState.RUN_DOWN);
         }
-        if (input.left) {
+        else if (input.left) {
             vec.x -= 1;
+            sm.setState(PlayerState.RUN_RIGHT);
         }
-        if (input.right) {
+        else if (input.right) {
             vec.x += 1;
+            sm.setState(PlayerState.RUN_RIGHT);
+        }
+        else {
+            sm.setState(PlayerState.IDLE_UP);
         }
         sm.update();
         position.move(vec.scale(speed));
